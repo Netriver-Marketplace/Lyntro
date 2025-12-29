@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo generateCSRFToken(); ?>">
+    <title>Products - Lyntro</title>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                🛒 Lyntro
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html" class="active">Products</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <?php if (isLoggedIn()): ?>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="messages.html">Messages</a></li>
+                    <?php else: ?>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <?php if (isLoggedIn()): ?>
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </div>
+                    <a href="cart.html" class="btn btn-outline">Cart</a>
+                    <a href="auth.php?action=logout" class="btn btn-secondary">Logout</a>
+                <?php else: ?>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                <?php endif; ?>
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <section class="hero" style="padding: 40px 0;">
+        <div class="container">
+            <h1 style="font-size: 2rem; margin-bottom: 20px;">Browse Products</h1>
+            <form id="search-form" class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for products..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Products Page -->
+    <section class="categories">
+        <div class="container">
+            <div class="filters" id="filter-form">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="category-filter">
+                        <option value="">All Categories</option>
+                        <option value="1">Electronics</option>
+                        <option value="2">Vehicles</option>
+                        <option value="3">Property</option>
+                        <option value="4">Fashion</option>
+                        <option value="5">Home & Garden</option>
+                        <option value="6">Jobs</option>
+                        <option value="7">Services</option>
+                        <option value="8">Animals & Pets</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="number" id="min-price" placeholder="Min" style="width: 100px;">
+                        <span>to</span>
+                        <input type="number" id="max-price" placeholder="Max" style="width: 100px;">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Location</label>
+                    <select id="location-filter">
+                        <option value="">All Locations</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Abuja">Abuja</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Ibadan">Ibadan</option>
+                        <option value="Port Harcourt">Port Harcourt</option>
+                        <option value="Benin City">Benin City</option>
+                        <option value="Kaduna">Kaduna</option>
+                        <option value="Jos">Jos</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-filter">
+                        <option value="newest">Newest First</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary" onclick="app.products.handleFilter(event)">Apply Filters</button>
+                </div>
+                
+                <div class="filter-group">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-secondary" onclick="app.products.handleFilter(event)">Reset</button>
+                </div>
+            </div>
+            
+            <div id="products-grid" class="products-grid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            
+            <div id="pagination"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About NaijaMarket</h4>
+                    <p>Nigeria's trusted online marketplace for buying and selling goods and services safely.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="products.html?category=electronics">Electronics</a></li>
+                        <li><a href="products.html?category=vehicles">Vehicles</a></li>
+                        <li><a href="products.html?category=property">Property</a></li>
+                        <li><a href="products.html?category=fashion">Fashion</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Safety Tips</a></li>
+                        <li><a href="contact.html">Report Abuse</a></li>
+                        <li><a href="contact.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lyntro. All rights reserved. Made with ❤️ in Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo generateCSRFToken(); ?>">
+    <title>About Us - Lyntro</title>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                🛒 Lyntro
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <?php if (isLoggedIn()): ?>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="messages.html">Messages</a></li>
+                    <?php else: ?>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <?php if (isLoggedIn()): ?>
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </div>
+                    <a href="cart.html" class="btn btn-outline">Cart</a>
+                    <a href="auth.php?action=logout" class="btn btn-secondary">Logout</a>
+                <?php else: ?>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                <?php endif; ?>
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Page -->
+    <section class="about-section">
+        <div class="container">
+            <h1>About Lyntro</h1>
+            <p>
+                Lyntro is Nigeria's premier online marketplace, designed to connect buyers and sellers across the nation safely and efficiently. 
+                Built with Nigerian needs in mind, we provide a secure platform where you can buy and sell everything from electronics and vehicles 
+                to fashion items and real estate.
+            </p>
+            
+            <div style="margin: 40px 0;">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=400&fit=crop" 
+                     alt="Online Shopping" 
+                     style="width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: var(--shadow-lg);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="categories" style="background-color: var(--bg-secondary);">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--text-color);">Our Mission</h2>
+            <p style="max-width: 800px; margin: 0 auto 40px; color: var(--text-light); font-size: 1.1rem;">
+                To revolutionize how Nigerians buy and sell by providing a trusted, secure, and user-friendly marketplace 
+                that empowers individuals and businesses to connect and transact with confidence.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🎯 Our Vision</h3>
+                    <p>To become Nigeria's most trusted and widely-used online marketplace, fostering economic growth and 
+                    connecting communities across the country.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💡 Our Values</h3>
+                    <p>We believe in trust, security, innovation, and customer satisfaction. Every feature we build is 
+                    designed with these core values at heart.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🤝 Our Promise</h3>
+                    <p>We are committed to providing a safe environment where every transaction is secure, every user is 
+                    respected, and every experience is positive.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="categories">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: 30px; color: var(--text-color);">What Makes Us Different</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🔒 Security First</h3>
+                    <p>Advanced security measures including password hashing, CSRF protection, and brute force attack 
+                    prevention to keep your data safe.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💬 Direct Communication</h3>
+                    <p>Built-in messaging system allows buyers and sellers to negotiate prices, discuss product details, 
+                    and arrange meetings directly.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⭐ Seller Ratings</h3>
+                    <p>Transparent rating and review system helps you make informed decisions and build trust with 
+                    reliable sellers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📍 Local Focus</h3>
+                    <p>Location-based filtering helps you find products and services in your specific area across all 
+                    Nigerian states.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🌙 Dark Mode</h3>
+                    <p>Choose between light and dark themes for comfortable browsing experience anytime, anywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 Fully Responsive</h3>
+                    <p>Optimized for all devices - phones, tablets, and desktops - ensuring a seamless experience 
+                    wherever you are.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="hero" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-light));">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 40px;">How It Works</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 15px;">1️⃣</div>
+                    <h3 style="color: white; margin-bottom: 10px;">Create Account</h3>
+                    <p style="color: rgba(255,255,255,0.9);">Sign up for free in seconds. Choose whether you want to buy, sell, or both.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 15px;">2️⃣</div>
+                    <h3 style="color: white; margin-bottom: 10px;">Browse & List</h3>
+                    <p style="color: rgba(255,255,255,0.9);">Browse thousands of products or list your own items for sale with detailed descriptions.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 15px;">3️⃣</div>
+                    <h3 style="color: white; margin-bottom: 10px;">Connect & Transact</h3>
+                    <p style="color: rgba(255,255,255,0.9);">Chat with sellers, negotiate prices, and complete transactions securely.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="stats-grid" style="text-align: center;">
+                <div class="stat-card">
+                    <h3>10K+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat-card">
+                    <h3>50K+</h3>
+                    <p>Products Listed</p>
+                </div>
+                <div class="stat-card">
+                    <h3>36</h3>
+                    <p>States Covered</p>
+                </div>
+                <div class="stat-card">
+                    <h3>24/7</h3>
+                    <p>Support Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="categories" style="background-color: var(--bg-secondary);">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: 30px; color: var(--text-color);">Our Team</h2>
+            <p style="max-width: 800px; margin: 0 auto 40px; color: var(--text-light); font-size: 1.1rem;">
+                We are a passionate team of Nigerians dedicated to creating the best online marketplace experience 
+                for our fellow citizens.
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">👨‍💻</div>
+                    <h3 style="color: var(--text-color);">Tech Lead</h3>
+                    <p style="color: var(--text-light);">Full Stack Developer</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--secondary-color), #f59e0b); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">🎨</div>
+                    <h3 style="color: var(--text-color);">Design Lead</h3>
+                    <p style="color: var(--text-light);">UI/UX Designer</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 150px; height: 150px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">📊</div>
+                    <h3 style="color: var(--text-color);">Operations</h3>
+                    <p style="color: var(--text-light);">Marketplace Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="hero" style="background: linear-gradient(135deg, var(--secondary-color), #f59e0b);">
+        <div class="container">
+            <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Ready to Start?</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Join thousands of Nigerians already using NaijaMarket</p>
+            <?php if (!isLoggedIn()): ?>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <a href="register.html" class="btn btn-primary" style="background-color: white; color: var(--secondary-color);">Create Free Account</a>
+                    <a href="products.html" class="btn btn-outline" style="border-color: white; color: white;">Browse Products</a>
+                </div>
+            <?php else: ?>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <a href="dashboard.html" class="btn btn-primary" style="background-color: white; color: var(--secondary-color);">Go to Dashboard</a>
+                    <a href="products.html" class="btn btn-outline" style="border-color: white; color: white;">Browse Products</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Lyntro</h4>
+                    <p>Nigeria's trusted online marketplace for buying and selling goods and services safely.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="products.html?category=electronics">Electronics</a></li>
+                        <li><a href="products.html?category=vehicles">Vehicles</a></li>
+                        <li><a href="products.html?category=property">Property</a></li>
+                        <li><a href="products.html?category=fashion">Fashion</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Safety Tips</a></li>
+                        <li><a href="contact.html">Report Abuse</a></li>
+                        <li><a href="contact.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lyntro. All rights reserved. Made with ❤️ in Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

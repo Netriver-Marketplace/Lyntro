@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo generateCSRFToken(); ?>">
+    <title>Register - Lyntro</title>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                🛒 Lyntro
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <a href="login.html" class="btn btn-primary">Login</a>
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Register Form -->
+    <section class="categories">
+        <div class="container">
+            <div class="form-container" style="max-width: 600px;">
+                <h2>🚀 Create Your Account</h2>
+                <p style="text-align: center; margin-bottom: 20px; color: var(--text-light);">Join thousands of Nigerians buying and selling safely on Lyntro</p>
+                
+                <form id="register-form" method="POST" action="auth.php">
+                    <input type="hidden" name="action" value="register">
+                    <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                    
+                    <div class="form-group">
+                        <label for="username">Username *</label>
+                        <input type="text" id="username" name="username" required placeholder="Choose a username">
+                        <small>This will be your public display name</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        <small>We'll send account updates to this email</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                        <small>Include country code (e.g., +234)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" placeholder="Your city/state (e.g., Lagos, Abuja)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user_type">I want to:</label>
+                        <select id="user_type" name="user_type" required>
+                            <option value="both">Both Buy and Sell</option>
+                            <option value="buyer">Only Buy</option>
+                            <option value="seller">Only Sell</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" name="password" required placeholder="Create a password">
+                        <small>Minimum <?php echo PASSWORD_MIN_LENGTH; ?> characters</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password *</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password">
+                        <small>Both passwords must match</small>
+                    </div>
+                    
+                    <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="terms" name="terms" required style="width: auto;">
+                        <label for="terms" style="margin: 0;">I agree to the <a href="#" style="color: var(--primary-color);">Terms of Service</a> and <a href="#" style="color: var(--primary-color);">Privacy Policy</a></label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </div>
+                </form>
+                
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                    <p style="color: var(--text-light);">Already have an account?</p>
+                    <a href="login.html" class="btn btn-outline" style="margin-top: 10px;">Login Instead</a>
+                </div>
+                
+                <div id="register-message" style="margin-top: 20px; padding: 15px; border-radius: 8px; display: none;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About NaijaMarket</h4>
+                    <p>Nigeria's trusted online marketplace for buying and selling goods and services safely.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Safety Tips</a></li>
+                        <li><a href="contact.html">Report Abuse</a></li>
+                        <li><a href="contact.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lyntro. All rights reserved. Made with ❤️ in Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Handle register form submission with AJAX
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const messageDiv = document.getElementById('register-message');
+            
+            // Validate passwords match
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                messageDiv.style.display = 'block';
+                messageDiv.style.backgroundColor = '#fee2e2';
+                messageDiv.style.color = '#991b1b';
+                messageDiv.textContent = 'Passwords do not match';
+                return;
+            }
+            
+            // Validate password strength
+            if (password.length < <?php echo PASSWORD_MIN_LENGTH; ?>) {
+                messageDiv.style.display = 'block';
+                messageDiv.style.backgroundColor = '#fee2e2';
+                messageDiv.style.color = '#991b1b';
+                messageDiv.textContent = 'Password must be at least <?php echo PASSWORD_MIN_LENGTH; ?> characters';
+                return;
+            }
+            
+            fetch('auth.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.style.display = 'block';
+                
+                if (data.success) {
+                    messageDiv.style.backgroundColor = '#d1fae5';
+                    messageDiv.style.color = '#065f46';
+                    messageDiv.textContent = data.message + ' Redirecting to dashboard...';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    messageDiv.style.backgroundColor = '#fee2e2';
+                    messageDiv.style.color = '#991b1b';
+                    messageDiv.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.style.backgroundColor = '#fee2e2';
+                messageDiv.style.color = '#991b1b';
+                messageDiv.textContent = 'An error occurred. Please try again.';
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
