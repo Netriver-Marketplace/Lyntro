@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo generateCSRFToken(); ?>">
+    <title>Dashboard - Lyntro</title>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                🛒 Lyntro
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="messages.html">Messages</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <div class="cart-icon">
+                    🛒
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </div>
+                <a href="cart.html" class="btn btn-outline">Cart</a>
+                <a href="auth.php?action=logout" class="btn btn-secondary">Logout</a>
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- Sidebar -->
+                <div class="dashboard-sidebar">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white;">
+                            👤
+                        </div>
+                        <h3 id="user-name">Loading...</h3>
+                        <p id="user-email" style="color: var(--text-light); font-size: 0.9rem;">Loading...</p>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active" onclick="showSection('overview')">📊 Overview</a></li>
+                        <li><a href="#" onclick="showSection('my-products')">📦 My Products</a></li>
+                        <li><a href="#" onclick="showSection('add-product')">➕ Add Product</a></li>
+                        <li><a href="#" onclick="showSection('orders')">🛒 Orders</a></li>
+                        <li><a href="#" onclick="showSection('messages')">💬 Messages</a></li>
+                        <li><a href="#" onclick="showSection('settings')">⚙️ Settings</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="dashboard-content">
+                    <!-- Overview Section -->
+                    <div id="overview-section" class="dashboard-section">
+                        <h2>Dashboard Overview</h2>
+                        <p style="color: var(--text-light); margin-bottom: 30px;">Welcome back! Here's what's happening with your account.</p>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h3 id="stat-products">0</h3>
+                                <p>Active Products</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="stat-orders">0</h3>
+                                <p>Total Orders</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="stat-views">0</h3>
+                                <p>Product Views</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="stat-rating">0.0</h3>
+                                <p>Your Rating</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 40px;">
+                            <h3 style="margin-bottom: 20px;">Quick Actions</h3>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <button class="btn btn-primary" onclick="showSection('add-product')">Add New Product</button>
+                                <button class="btn btn-outline" onclick="window.location.href='messages.html'">Check Messages</button>
+                                <button class="btn btn-secondary" onclick="showSection('settings')">Update Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- My Products Section -->
+                    <div id="my-products-section" class="dashboard-section" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2>My Products</h2>
+                            <button class="btn btn-primary" onclick="showSection('add-product')">Add Product</button>
+                        </div>
+                        
+                        <div id="my-products-list">
+                            <div class="loading">Loading your products...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add Product Section -->
+                    <div id="add-product-section" class="dashboard-section" style="display: none;">
+                        <h2>Add New Product</h2>
+                        <p style="color: var(--text-light); margin-bottom: 20px;">Fill in the details to list your product for sale</p>
+                        
+                        <form id="add-product-form" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="add">
+                            <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                            
+                            <div class="form-group">
+                                <label for="product-title">Product Title *</label>
+                                <input type="text" id="product-title" name="title" required placeholder="What are you selling?">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-category">Category *</label>
+                                <select id="product-category" name="category_id" required>
+                                    <option value="">Select a category</option>
+                                    <option value="1">Electronics</option>
+                                    <option value="2">Vehicles</option>
+                                    <option value="3">Property</option>
+                                    <option value="4">Fashion</option>
+                                    <option value="5">Home & Garden</option>
+                                    <option value="6">Jobs</option>
+                                    <option value="7">Services</option>
+                                    <option value="8">Animals & Pets</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-description">Description *</label>
+                                <textarea id="product-description" name="description" required placeholder="Describe your product in detail..." rows="5"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-price">Price (₦) *</label>
+                                <input type="number" id="product-price" name="price" required placeholder="Enter price in Naira" min="0" step="0.01">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-location">Location *</label>
+                                <input type="text" id="product-location" name="location" required placeholder="e.g., Lagos, Abuja">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-condition">Condition *</label>
+                                <select id="product-condition" name="condition" required>
+                                    <option value="new">New</option>
+                                    <option value="used">Used</option>
+                                    <option value="refurbished">Refurbished</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="negotiable" checked style="width: auto;">
+                                    Price is negotiable
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="product-images">Product Images</label>
+                                <input type="file" id="product-images" name="images[]" multiple accept="image/*">
+                                <small>Upload up to 5 images. Max 5MB each.</small>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">List Product</button>
+                                <button type="button" class="btn btn-secondary" onclick="showSection('overview')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Orders Section -->
+                    <div id="orders-section" class="dashboard-section" style="display: none;">
+                        <h2>My Orders</h2>
+                        <div id="orders-list">
+                            <div class="loading">Loading your orders...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div id="settings-section" class="dashboard-section" style="display: none;">
+                        <h2>Account Settings</h2>
+                        <p style="color: var(--text-light); margin-bottom: 20px;">Update your profile information</p>
+                        
+                        <form id="settings-form">
+                            <input type="hidden" name="action" value="update_profile">
+                            <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                            
+                            <div class="form-group">
+                                <label for="settings-fullname">Full Name</label>
+                                <input type="text" id="settings-fullname" name="full_name" placeholder="Your full name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="settings-phone">Phone Number</label>
+                                <input type="tel" id="settings-phone" name="phone" placeholder="Your phone number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="settings-location">Location</label>
+                                <input type="text" id="settings-location" name="location" placeholder="Your city/state">
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </div>
+                        </form>
+                        
+                        <div style="margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--border-color);">
+                            <h3>Change Password</h3>
+                            <form id="password-form" style="margin-top: 20px;">
+                                <input type="hidden" name="action" value="change_password">
+                                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                                
+                                <div class="form-group">
+                                    <label for="current-password">Current Password</label>
+                                    <input type="password" id="current-password" name="current_password" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" id="new-password" name="new_password" required>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-danger">Change Password</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About NaijaMarket</h4>
+                    <p>Nigeria's trusted online marketplace for buying and selling goods and services safely.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Safety Tips</a></li>
+                        <li><a href="contact.html">Report Abuse</a></li>
+                        <li><a href="contact.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lyntro. All rights reserved. Made with ❤️ in Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Show/hide dashboard sections
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(el => el.style.display = 'none');
+            
+            // Show selected section
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-menu a').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Load section-specific data
+            if (section === 'my-products') {
+                loadMyProducts();
+            } else if (section === 'orders') {
+                loadOrders();
+            } else if (section === 'overview') {
+                loadStats();
+            }
+        }
+        
+        // Load user stats
+        function loadStats() {
+            // This would typically fetch from API
+            document.getElementById('stat-products').textContent = '0';
+            document.getElementById('stat-orders').textContent = '0';
+            document.getElementById('stat-views').textContent = '0';
+            document.getElementById('stat-rating').textContent = '0.0';
+        }
+        
+        // Load user's products
+        function loadMyProducts() {
+            fetch('products.php?action=my_products')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('my-products-list');
+                    if (data.success && data.products.length > 0) {
+                        container.innerHTML = data.products.map(product => `
+                            <div class="product-card" style="display: flex; gap: 20px; padding: 15px; margin-bottom: 20px;">
+                                <img src="${product.images?.[0] || 'placeholder.jpg'}" alt="${product.title}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                                <div style="flex: 1;">
+                                    <h3>${product.title}</h3>
+                                    <p class="product-price">₦${new Intl.NumberFormat('en-NG').format(product.price)}</p>
+                                    <p>Status: <span style="color: ${product.status === 'active' ? 'green' : 'red'}">${product.status}</span></p>
+                                    <p>Views: ${product.views}</p>
+                                    <div style="margin-top: 10px;">
+                                        <button class="btn btn-secondary" onclick="editProduct(${product.id})">Edit</button>
+                                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<div class="empty-state"><h3>No products yet</h3><p>Start by adding your first product!</p></div>';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('my-products-list').innerHTML = '<div class="error-message">Failed to load products</div>';
+                });
+        }
+        
+        // Load orders
+        function loadOrders() {
+            fetch('cart.php?action=orders')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('orders-list');
+                    if (data.success && data.orders.length > 0) {
+                        container.innerHTML = data.orders.map(order => `
+                            <div style="background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                                <h3>Order #${order.id}</h3>
+                                <p>Product: ${order.product_title}</p>
+                                <p>Quantity: ${order.quantity}</p>
+                                <p>Total: ₦${new Intl.NumberFormat('en-NG').format(order.total_price)}</p>
+                                <p>Status: <span style="color: var(--primary-color);">${order.status}</span></p>
+                                <p>Date: ${new Date(order.created_at).toLocaleDateString()}</p>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<div class="empty-state"><h3>No orders yet</h3><p>Your order history will appear here</p></div>';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('orders-list').innerHTML = '<div class="error-message">Failed to load orders</div>';
+                });
+        }
+        
+        // Handle add product form
+        document.getElementById('add-product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('products.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Product added successfully!');
+                    this.reset();
+                    showSection('my-products');
+                } else {
+                    alert(data.message || 'Failed to add product');
+                }
+            })
+            .catch(error => {
+                alert('An error occurred. Please try again.');
+                console.error('Error:', error);
+            });
+        });
+        
+        // Handle settings form
+        document.getElementById('settings-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('auth.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Profile updated successfully!');
+                } else {
+                    alert(data.message || 'Failed to update profile');
+                }
+            })
+            .catch(error => {
+                alert('An error occurred. Please try again.');
+            });
+        });
+        
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            
+            // Load user info (this would typically come from API)
+            document.getElementById('user-name').textContent = 'Welcome User';
+            document.getElementById('user-email').textContent = 'user@example.com';
+        });
+    </script>
+</body>
+</html>

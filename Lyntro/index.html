@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo generateCSRFToken(); ?>">
+    <title>Lyntro - Nigeria's Online Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                🛒 Lyntro
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <?php if (isLoggedIn()): ?>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="messages.html">Messages</a></li>
+                    <?php else: ?>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <?php if (isLoggedIn()): ?>
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </div>
+                    <a href="cart.html" class="btn btn-outline">Cart</a>
+                    <a href="auth.php?action=logout" class="btn btn-secondary">Logout</a>
+                <?php else: ?>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                <?php endif; ?>
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Buy & Sell Anything in Nigeria</h1>
+            <p>The safest and most trusted marketplace for Nigerians. Connect with buyers and sellers nationwide on Lyntro.</p>
+            
+            <form id="search-form" class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for products, brands, or categories..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Browse Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="window.location.href='products.html?category=electronics'">
+                    <h3>📱 Electronics</h3>
+                    <p>Phones, laptops & more</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=vehicles'">
+                    <h3>🚗 Vehicles</h3>
+                    <p>Cars, bikes & parts</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=property'">
+                    <h3>🏠 Property</h3>
+                    <p>Houses, land & real estate</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=fashion'">
+                    <h3>👗 Fashion</h3>
+                    <p>Clothing & accessories</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=home'">
+                    <h3>🏡 Home & Garden</h3>
+                    <p>Furniture & appliances</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=jobs'">
+                    <h3>💼 Jobs</h3>
+                    <p>Find your dream job</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=services'">
+                    <h3>🔧 Services</h3>
+                    <p>Professional services</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?category=animals'">
+                    <h3>🐾 Animals & Pets</h3>
+                    <p>Pets & supplies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div id="products-grid" class="products-grid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <div id="pagination"></div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="categories" style="background-color: var(--bg-secondary);">
+        <div class="container">
+            <h2 class="section-title">Why Choose NaijaMarket?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🔒 Secure Transactions</h3>
+                    <p>Buy and sell with confidence using our secure payment system and seller verification.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🤝 Direct Communication</h3>
+                    <p>Chat directly with buyers and sellers to negotiate prices and arrange meetings.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📍 Nationwide Coverage</h3>
+                    <p>Find products and services in every state across Nigeria, from Lagos to Abuja.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⭐ Seller Ratings</h3>
+                    <p>Make informed decisions with our transparent seller rating and review system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="hero" style="background: linear-gradient(135deg, var(--secondary-color), #f59e0b);">
+        <div class="container">
+            <h1>Start Selling Today</h1>
+            <p>Join thousands of Nigerians already buying and selling on NaijaMarket. It's free and easy!</p>
+            <?php if (!isLoggedIn()): ?>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <a href="register.html" class="btn btn-primary" style="background-color: white; color: var(--secondary-color);">Register Now</a>
+                    <a href="products.html" class="btn btn-outline" style="border-color: white; color: white;">Browse Products</a>
+                </div>
+            <?php else: ?>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <a href="dashboard.html" class="btn btn-primary" style="background-color: white; color: var(--secondary-color);">Go to Dashboard</a>
+                    <a href="products.html" class="btn btn-outline" style="border-color: white; color: white;">Browse Products</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Lyntro</h4>
+                    <p>Nigeria's trusted online marketplace for buying and selling goods and services safely.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="products.html?category=electronics">Electronics</a></li>
+                        <li><a href="products.html?category=vehicles">Vehicles</a></li>
+                        <li><a href="products.html?category=property">Property</a></li>
+                        <li><a href="products.html?category=fashion">Fashion</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Safety Tips</a></li>
+                        <li><a href="contact.html">Report Abuse</a></li>
+                        <li><a href="contact.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lyntro. All rights reserved. Made with ❤️ in Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
